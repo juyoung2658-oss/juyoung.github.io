@@ -1,0 +1,2184 @@
+<!DOCTYPE html>
+<html>
+<head>
+    
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+    <script src="https://cdn.jsdelivr.net/npm/leaflet@1.9.3/dist/leaflet.js"></script>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet@1.9.3/dist/leaflet.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-glyphicons.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.2.0/css/all.min.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/python-visualization/folium/folium/templates/leaflet.awesome.rotate.min.css"/>
+    
+            <meta name="viewport" content="width=device-width,
+                initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+            <style>
+                #map_1a53db21442c5c5a6ef9ee89b6021eb6 {
+                    position: relative;
+                    width: 100.0%;
+                    height: 100.0%;
+                    left: 0.0%;
+                    top: 0.0%;
+                }
+                .leaflet-container { font-size: 1rem; }
+            </style>
+
+            <style>html, body {
+                width: 100%;
+                height: 100%;
+                margin: 0;
+                padding: 0;
+            }
+            </style>
+
+            <style>#map {
+                position:absolute;
+                top:0;
+                bottom:0;
+                right:0;
+                left:0;
+                }
+            </style>
+
+            <script>
+                L_NO_TOUCH = false;
+                L_DISABLE_3D = false;
+            </script>
+
+        
+</head>
+<body>
+    
+    
+<div style="position: fixed; bottom: 25px; left: 25px; z-index: 9999;
+            background-color: rgba(255, 255, 255, 0.96); padding: 14px 18px;
+            border: 2px solid #495057; border-radius: 10px;
+            font-size: 14px; line-height: 1.8; box-shadow: 3px 3px 10px rgba(0,0,0,0.22);">
+  <div style="font-size: 16px; font-weight: 700; margin-bottom: 4px;">실시간 교통 혼잡도</div>
+  <div>
+    <span style="display:inline-block; width:26px; height:5px; background:#51cf66; opacity:0.72; vertical-align:middle;"></span>
+    &nbsp;<b>원활</b> (초록 · 얇고 연한 명도)
+  </div>
+  <div>
+    <span style="display:inline-block; width:26px; height:8px; background:#74c0fc; opacity:0.86; vertical-align:middle;"></span>
+    &nbsp;<b>서행</b> (파랑 · 중간 두께·밝기)
+  </div>
+  <div>
+    <span style="display:inline-block; width:26px; height:11px; background:#ff8787; opacity:0.98; vertical-align:middle;"></span>
+    &nbsp;<b>정체</b> (빨강 · 가장 굵고 밝은 명도)
+  </div>
+</div>
+    
+            <div class="folium-map" id="map_1a53db21442c5c5a6ef9ee89b6021eb6" ></div>
+        
+</body>
+<script>
+    
+    
+            var map_1a53db21442c5c5a6ef9ee89b6021eb6 = L.map(
+                "map_1a53db21442c5c5a6ef9ee89b6021eb6",
+                {
+                    center: [37.53055444344804, 126.96555987644184],
+                    crs: L.CRS.EPSG3857,
+                    ...{
+  "zoom": 12,
+  "zoomControl": true,
+  "preferCanvas": false,
+  "name": "Google Maps (\uae30\ubcf8)",
+}
+
+                }
+            );
+
+            
+
+        
+    
+            var tile_layer_353abc007d11e1a417464b067315c3a3 = L.tileLayer(
+                "https://mt1.google.com/vt/lyrs=m\u0026x={x}\u0026y={y}\u0026z={z}\u0026key=AIzaSyD3bYh3t3LVnX9FgO7-YTbGEgWORH2T3T0",
+                {
+  "minZoom": 0,
+  "maxZoom": 18,
+  "maxNativeZoom": 18,
+  "noWrap": false,
+  "attribution": "Google Maps",
+  "subdomains": "abc",
+  "detectRetina": false,
+  "tms": false,
+  "opacity": 1,
+}
+
+            );
+        
+    
+            tile_layer_353abc007d11e1a417464b067315c3a3.addTo(map_1a53db21442c5c5a6ef9ee89b6021eb6);
+        
+    
+            var tile_layer_71f3c3de7efc676212d944fb4ff4e745 = L.tileLayer(
+                "https://mt1.google.com/vt/lyrs=y\u0026x={x}\u0026y={y}\u0026z={z}\u0026key=AIzaSyD3bYh3t3LVnX9FgO7-YTbGEgWORH2T3T0",
+                {
+  "minZoom": 0,
+  "maxZoom": 18,
+  "maxNativeZoom": 18,
+  "noWrap": false,
+  "attribution": "Google Maps Satellite",
+  "subdomains": "abc",
+  "detectRetina": false,
+  "tms": false,
+  "opacity": 1,
+}
+
+            );
+        
+    
+            tile_layer_71f3c3de7efc676212d944fb4ff4e745.addTo(map_1a53db21442c5c5a6ef9ee89b6021eb6);
+        
+    
+            var feature_group_4bb91c04adda5a3094f12adae8e02a94 = L.featureGroup(
+                {
+}
+            );
+        
+    
+            var poly_line_9e6ffb4a491e3fc851c9f3fd61076a26 = L.polyline(
+                [[37.57, 126.9769], [37.5718, 127.0015]],
+                {"bubblingMouseEvents": true, "color": "#ff8787", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "#ff8787", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 0.98, "smoothFactor": 1.0, "stroke": true, "weight": 13.0}
+            ).addTo(feature_group_4bb91c04adda5a3094f12adae8e02a94);
+        
+    
+        var popup_caae89de97ad9fe718182263fe9f5fd0 = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_6a18ede2cd8e9d775c97ab74dde445a9 = $(`<div id="html_6a18ede2cd8e9d775c97ab74dde445a9" style="width: 100.0%; height: 100.0%;"><b>종로·광화문 축</b> (종로구)<br>링크ID: 1010000100<br>혼잡도: <b>정체</b><br>속도: 9.7 km/h / 여행시간: 136.0 초</div>`)[0];
+                popup_caae89de97ad9fe718182263fe9f5fd0.setContent(html_6a18ede2cd8e9d775c97ab74dde445a9);
+            
+        
+
+        poly_line_9e6ffb4a491e3fc851c9f3fd61076a26.bindPopup(popup_caae89de97ad9fe718182263fe9f5fd0)
+        ;
+
+        
+    
+    
+            poly_line_9e6ffb4a491e3fc851c9f3fd61076a26.bindTooltip(
+                `<div>
+                     [종로구 · 정체] 종로·광화문 축 (9.7 km/h)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var poly_line_67d2c2c7cac260d28ecf2f377c4c5dff = L.polyline(
+                [[37.576, 126.9975], [37.5885, 127.0028]],
+                {"bubblingMouseEvents": true, "color": "#74c0fc", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "#74c0fc", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 0.86, "smoothFactor": 1.0, "stroke": true, "weight": 9.5}
+            ).addTo(feature_group_4bb91c04adda5a3094f12adae8e02a94);
+        
+    
+        var popup_fbc5b5e8ff69c8c357e8cadea17ded21 = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_82ef70621d785f058cabe263885ca96e = $(`<div id="html_82ef70621d785f058cabe263885ca96e" style="width: 100.0%; height: 100.0%;"><b>대학로·혜화 축</b> (종로구)<br>링크ID: 1010000200<br>혼잡도: <b>서행</b><br>속도: 17.5 km/h / 여행시간: 75.0 초</div>`)[0];
+                popup_fbc5b5e8ff69c8c357e8cadea17ded21.setContent(html_82ef70621d785f058cabe263885ca96e);
+            
+        
+
+        poly_line_67d2c2c7cac260d28ecf2f377c4c5dff.bindPopup(popup_fbc5b5e8ff69c8c357e8cadea17ded21)
+        ;
+
+        
+    
+    
+            poly_line_67d2c2c7cac260d28ecf2f377c4c5dff.bindTooltip(
+                `<div>
+                     [종로구 · 서행] 대학로·혜화 축 (17.5 km/h)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var poly_line_69ea436688c0b07620e380ae7d030a73 = L.polyline(
+                [[37.5758, 126.9605], [37.5765, 126.9769]],
+                {"bubblingMouseEvents": true, "color": "#51cf66", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "#51cf66", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 0.72, "smoothFactor": 1.0, "stroke": true, "weight": 6.0}
+            ).addTo(feature_group_4bb91c04adda5a3094f12adae8e02a94);
+        
+    
+        var popup_04b75e580123cd5588d8398f3245e0a0 = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_303e37800426069f86a49253e2d50b3a = $(`<div id="html_303e37800426069f86a49253e2d50b3a" style="width: 100.0%; height: 100.0%;"><b>사직로·경복궁 서측 축</b> (종로구)<br>링크ID: 1010000300<br>혼잡도: <b>원활</b><br>속도: 25.2 km/h / 여행시간: 77.0 초</div>`)[0];
+                popup_04b75e580123cd5588d8398f3245e0a0.setContent(html_303e37800426069f86a49253e2d50b3a);
+            
+        
+
+        poly_line_69ea436688c0b07620e380ae7d030a73.bindPopup(popup_04b75e580123cd5588d8398f3245e0a0)
+        ;
+
+        
+    
+    
+            poly_line_69ea436688c0b07620e380ae7d030a73.bindTooltip(
+                `<div>
+                     [종로구 · 원활] 사직로·경복궁 서측 축 (25.2 km/h)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var poly_line_96af81910e793baa793dfc9f0074cf5b = L.polyline(
+                [[37.5788, 126.9775], [37.5805, 127.0025]],
+                {"bubblingMouseEvents": true, "color": "#51cf66", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "#51cf66", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 0.72, "smoothFactor": 1.0, "stroke": true, "weight": 6.0}
+            ).addTo(feature_group_4bb91c04adda5a3094f12adae8e02a94);
+        
+    
+        var popup_3019309de841666bc007805d0bb24ec4 = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_2df4027626432e0ed546d229621dee73 = $(`<div id="html_2df4027626432e0ed546d229621dee73" style="width: 100.0%; height: 100.0%;"><b>율곡로·창덕궁 북측 축</b> (종로구)<br>링크ID: 1010000400<br>혼잡도: <b>원활</b><br>속도: 30.6 km/h / 여행시간: 64.0 초</div>`)[0];
+                popup_3019309de841666bc007805d0bb24ec4.setContent(html_2df4027626432e0ed546d229621dee73);
+            
+        
+
+        poly_line_96af81910e793baa793dfc9f0074cf5b.bindPopup(popup_3019309de841666bc007805d0bb24ec4)
+        ;
+
+        
+    
+    
+            poly_line_96af81910e793baa793dfc9f0074cf5b.bindTooltip(
+                `<div>
+                     [종로구 · 원활] 율곡로·창덕궁 북측 축 (30.6 km/h)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var poly_line_703298b05b148dc161aa877c262f8371 = L.polyline(
+                [[37.5485, 126.9135], [37.562, 126.9245]],
+                {"bubblingMouseEvents": true, "color": "#51cf66", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "#51cf66", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 0.72, "smoothFactor": 1.0, "stroke": true, "weight": 6.0}
+            ).addTo(feature_group_4bb91c04adda5a3094f12adae8e02a94);
+        
+    
+        var popup_8b97a7bdec28280ca4c1fa282273d6e8 = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_39e20a0f0d0cb19b3d25270e810a0289 = $(`<div id="html_39e20a0f0d0cb19b3d25270e810a0289" style="width: 100.0%; height: 100.0%;"><b>양화로·홍대입구 축</b> (마포구)<br>링크ID: 1130000100<br>혼잡도: <b>원활</b><br>속도: 51.4 km/h / 여행시간: 25.0 초</div>`)[0];
+                popup_8b97a7bdec28280ca4c1fa282273d6e8.setContent(html_39e20a0f0d0cb19b3d25270e810a0289);
+            
+        
+
+        poly_line_703298b05b148dc161aa877c262f8371.bindPopup(popup_8b97a7bdec28280ca4c1fa282273d6e8)
+        ;
+
+        
+    
+    
+            poly_line_703298b05b148dc161aa877c262f8371.bindTooltip(
+                `<div>
+                     [마포구 · 원활] 양화로·홍대입구 축 (51.4 km/h)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var poly_line_61859a09f90340eb188c39bb10e7ece1 = L.polyline(
+                [[37.5665, 126.8895], [37.575, 126.906]],
+                {"bubblingMouseEvents": true, "color": "#51cf66", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "#51cf66", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 0.72, "smoothFactor": 1.0, "stroke": true, "weight": 6.0}
+            ).addTo(feature_group_4bb91c04adda5a3094f12adae8e02a94);
+        
+    
+        var popup_d8fa045c7196922800756f13c0080866 = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_ebbda401545d1120a527df917bc7f30e = $(`<div id="html_ebbda401545d1120a527df917bc7f30e" style="width: 100.0%; height: 100.0%;"><b>월드컵북로·상암 축</b> (마포구)<br>링크ID: 1130000200<br>혼잡도: <b>원활</b><br>속도: 38.5 km/h / 여행시간: 34.0 초</div>`)[0];
+                popup_d8fa045c7196922800756f13c0080866.setContent(html_ebbda401545d1120a527df917bc7f30e);
+            
+        
+
+        poly_line_61859a09f90340eb188c39bb10e7ece1.bindPopup(popup_d8fa045c7196922800756f13c0080866)
+        ;
+
+        
+    
+    
+            poly_line_61859a09f90340eb188c39bb10e7ece1.bindTooltip(
+                `<div>
+                     [마포구 · 원활] 월드컵북로·상암 축 (38.5 km/h)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var poly_line_f77948ee93de36210e152d46fb6b001e = L.polyline(
+                [[37.5395, 126.946], [37.5585, 126.941]],
+                {"bubblingMouseEvents": true, "color": "#51cf66", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "#51cf66", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 0.72, "smoothFactor": 1.0, "stroke": true, "weight": 6.0}
+            ).addTo(feature_group_4bb91c04adda5a3094f12adae8e02a94);
+        
+    
+        var popup_b482e63ffeb5135d4bccc6bd9233386a = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_3ad6dec40077c9cc0eac51a8b8c891b5 = $(`<div id="html_3ad6dec40077c9cc0eac51a8b8c891b5" style="width: 100.0%; height: 100.0%;"><b>마포대로·공덕·신촌 축</b> (마포구)<br>링크ID: 1130000300<br>혼잡도: <b>원활</b><br>속도: 62.0 km/h / 여행시간: 34.0 초</div>`)[0];
+                popup_b482e63ffeb5135d4bccc6bd9233386a.setContent(html_3ad6dec40077c9cc0eac51a8b8c891b5);
+            
+        
+
+        poly_line_f77948ee93de36210e152d46fb6b001e.bindPopup(popup_b482e63ffeb5135d4bccc6bd9233386a)
+        ;
+
+        
+    
+    
+            poly_line_f77948ee93de36210e152d46fb6b001e.bindTooltip(
+                `<div>
+                     [마포구 · 원활] 마포대로·공덕·신촌 축 (62.0 km/h)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var poly_line_2220030bfdc944f2366a106eedb0c508 = L.polyline(
+                [[37.545, 126.9055], [37.5485, 126.935]],
+                {"bubblingMouseEvents": true, "color": "#51cf66", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "#51cf66", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 0.72, "smoothFactor": 1.0, "stroke": true, "weight": 6.0}
+            ).addTo(feature_group_4bb91c04adda5a3094f12adae8e02a94);
+        
+    
+        var popup_7f2c07b43c9173193e911965c2e8e41b = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_8c912a77c66318543e6dadd19541cbbb = $(`<div id="html_8c912a77c66318543e6dadd19541cbbb" style="width: 100.0%; height: 100.0%;"><b>독막로·망원·합정 축</b> (마포구)<br>링크ID: 1130000400<br>혼잡도: <b>원활</b><br>속도: 50.0 km/h / 여행시간: 46.0 초</div>`)[0];
+                popup_7f2c07b43c9173193e911965c2e8e41b.setContent(html_8c912a77c66318543e6dadd19541cbbb);
+            
+        
+
+        poly_line_2220030bfdc944f2366a106eedb0c508.bindPopup(popup_7f2c07b43c9173193e911965c2e8e41b)
+        ;
+
+        
+    
+    
+            poly_line_2220030bfdc944f2366a106eedb0c508.bindTooltip(
+                `<div>
+                     [마포구 · 원활] 독막로·망원·합정 축 (50.0 km/h)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var poly_line_386c82acd94bf25c7420d0dc1ca04b1f = L.polyline(
+                [[37.5745, 126.885], [37.5795, 126.904]],
+                {"bubblingMouseEvents": true, "color": "#74c0fc", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "#74c0fc", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 0.86, "smoothFactor": 1.0, "stroke": true, "weight": 9.5}
+            ).addTo(feature_group_4bb91c04adda5a3094f12adae8e02a94);
+        
+    
+        var popup_58254b955c0d54dfc3a8383372974b1a = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_33e556e3cd71d42cac52c2e9fb46393e = $(`<div id="html_33e556e3cd71d42cac52c2e9fb46393e" style="width: 100.0%; height: 100.0%;"><b>성암로·DMC 서북 축</b> (마포구)<br>링크ID: 1130000500<br>혼잡도: <b>서행</b><br>속도: 22.7 km/h / 여행시간: 91.0 초</div>`)[0];
+                popup_58254b955c0d54dfc3a8383372974b1a.setContent(html_33e556e3cd71d42cac52c2e9fb46393e);
+            
+        
+
+        poly_line_386c82acd94bf25c7420d0dc1ca04b1f.bindPopup(popup_58254b955c0d54dfc3a8383372974b1a)
+        ;
+
+        
+    
+    
+            poly_line_386c82acd94bf25c7420d0dc1ca04b1f.bindTooltip(
+                `<div>
+                     [마포구 · 서행] 성암로·DMC 서북 축 (22.7 km/h)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var poly_line_c0c26a20338f93a23639736e05702110 = L.polyline(
+                [[37.521, 126.915], [37.5315, 126.931]],
+                {"bubblingMouseEvents": true, "color": "#51cf66", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "#51cf66", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 0.72, "smoothFactor": 1.0, "stroke": true, "weight": 6.0}
+            ).addTo(feature_group_4bb91c04adda5a3094f12adae8e02a94);
+        
+    
+        var popup_a761b829938ea4bb553b5e41b55d3dcf = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_3e855fadc99363c432b219ba22aadd33 = $(`<div id="html_3e855fadc99363c432b219ba22aadd33" style="width: 100.0%; height: 100.0%;"><b>여의대로·여의도 축</b> (영등포구)<br>링크ID: 1180000100<br>혼잡도: <b>원활</b><br>속도: 30.9 km/h / 여행시간: 31.0 초</div>`)[0];
+                popup_a761b829938ea4bb553b5e41b55d3dcf.setContent(html_3e855fadc99363c432b219ba22aadd33);
+            
+        
+
+        poly_line_c0c26a20338f93a23639736e05702110.bindPopup(popup_a761b829938ea4bb553b5e41b55d3dcf)
+        ;
+
+        
+    
+    
+            poly_line_c0c26a20338f93a23639736e05702110.bindTooltip(
+                `<div>
+                     [영등포구 · 원활] 여의대로·여의도 축 (30.9 km/h)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var poly_line_6ab98fac10e3831975b84faabf31d46f = L.polyline(
+                [[37.513, 126.8965], [37.5225, 126.912]],
+                {"bubblingMouseEvents": true, "color": "#74c0fc", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "#74c0fc", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 0.86, "smoothFactor": 1.0, "stroke": true, "weight": 9.5}
+            ).addTo(feature_group_4bb91c04adda5a3094f12adae8e02a94);
+        
+    
+        var popup_29b83970c4e06676c6debefca8862d6c = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_853fdbfeb087b0f60e91de3073eacffe = $(`<div id="html_853fdbfeb087b0f60e91de3073eacffe" style="width: 100.0%; height: 100.0%;"><b>영등포로·영등포역 축</b> (영등포구)<br>링크ID: 1180000200<br>혼잡도: <b>서행</b><br>속도: 23.0 km/h / 여행시간: 42.0 초</div>`)[0];
+                popup_29b83970c4e06676c6debefca8862d6c.setContent(html_853fdbfeb087b0f60e91de3073eacffe);
+            
+        
+
+        poly_line_6ab98fac10e3831975b84faabf31d46f.bindPopup(popup_29b83970c4e06676c6debefca8862d6c)
+        ;
+
+        
+    
+    
+            poly_line_6ab98fac10e3831975b84faabf31d46f.bindTooltip(
+                `<div>
+                     [영등포구 · 서행] 영등포로·영등포역 축 (23.0 km/h)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var poly_line_a1fefa65f951880931b10183a99f362d = L.polyline(
+                [[37.529, 126.888], [37.5345, 126.914]],
+                {"bubblingMouseEvents": true, "color": "#51cf66", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "#51cf66", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 0.72, "smoothFactor": 1.0, "stroke": true, "weight": 6.0}
+            ).addTo(feature_group_4bb91c04adda5a3094f12adae8e02a94);
+        
+    
+        var popup_2ecaf0e3fd507c5d3de4bac9affce25f = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_84fb079f7a5e5f404e798231a7974053 = $(`<div id="html_84fb079f7a5e5f404e798231a7974053" style="width: 100.0%; height: 100.0%;"><b>국회대로·당산·양평 축</b> (영등포구)<br>링크ID: 1180000300<br>혼잡도: <b>원활</b><br>속도: 38.7 km/h / 여행시간: 27.0 초</div>`)[0];
+                popup_2ecaf0e3fd507c5d3de4bac9affce25f.setContent(html_84fb079f7a5e5f404e798231a7974053);
+            
+        
+
+        poly_line_a1fefa65f951880931b10183a99f362d.bindPopup(popup_2ecaf0e3fd507c5d3de4bac9affce25f)
+        ;
+
+        
+    
+    
+            poly_line_a1fefa65f951880931b10183a99f362d.bindTooltip(
+                `<div>
+                     [영등포구 · 원활] 국회대로·당산·양평 축 (38.7 km/h)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var poly_line_f0d7172afeb7114f379174a405eb4d02 = L.polyline(
+                [[37.489, 126.9015], [37.512, 126.9095]],
+                {"bubblingMouseEvents": true, "color": "#ff8787", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "#ff8787", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 0.98, "smoothFactor": 1.0, "stroke": true, "weight": 13.0}
+            ).addTo(feature_group_4bb91c04adda5a3094f12adae8e02a94);
+        
+    
+        var popup_a25db07a4abdb7a088bc86d5c9e87d0d = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_6bf8c771ed8b0bc186a0867b9f75c048 = $(`<div id="html_6bf8c771ed8b0bc186a0867b9f75c048" style="width: 100.0%; height: 100.0%;"><b>시흥대로·대림·신길 축</b> (영등포구)<br>링크ID: 1180000400<br>혼잡도: <b>정체</b><br>속도: 11.4 km/h / 여행시간: 93.0 초</div>`)[0];
+                popup_a25db07a4abdb7a088bc86d5c9e87d0d.setContent(html_6bf8c771ed8b0bc186a0867b9f75c048);
+            
+        
+
+        poly_line_f0d7172afeb7114f379174a405eb4d02.bindPopup(popup_a25db07a4abdb7a088bc86d5c9e87d0d)
+        ;
+
+        
+    
+    
+            poly_line_f0d7172afeb7114f379174a405eb4d02.bindTooltip(
+                `<div>
+                     [영등포구 · 정체] 시흥대로·대림·신길 축 (11.4 km/h)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var poly_line_0714ce55454da95fc39dcc7485428c8f = L.polyline(
+                [[37.518, 126.921], [37.523, 126.9365]],
+                {"bubblingMouseEvents": true, "color": "#51cf66", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "#51cf66", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 0.72, "smoothFactor": 1.0, "stroke": true, "weight": 6.0}
+            ).addTo(feature_group_4bb91c04adda5a3094f12adae8e02a94);
+        
+    
+        var popup_f8966d5b9301a1991596759937524110 = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_673a2163e0113226f41d62826ccb6d90 = $(`<div id="html_673a2163e0113226f41d62826ccb6d90" style="width: 100.0%; height: 100.0%;"><b>여의나루로·여의도 남측 축</b> (영등포구)<br>링크ID: 1180000500<br>혼잡도: <b>원활</b><br>속도: 속도 미수신 / 여행시간: -</div>`)[0];
+                popup_f8966d5b9301a1991596759937524110.setContent(html_673a2163e0113226f41d62826ccb6d90);
+            
+        
+
+        poly_line_0714ce55454da95fc39dcc7485428c8f.bindPopup(popup_f8966d5b9301a1991596759937524110)
+        ;
+
+        
+    
+    
+            poly_line_0714ce55454da95fc39dcc7485428c8f.bindTooltip(
+                `<div>
+                     [영등포구 · 원활] 여의나루로·여의도 남측 축 (속도 미수신)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var poly_line_f8797c8ea4b60f040b8e097e57055b80 = L.polyline(
+                [[37.4979, 127.0276], [37.515, 127.0205]],
+                {"bubblingMouseEvents": true, "color": "#51cf66", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "#51cf66", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 0.72, "smoothFactor": 1.0, "stroke": true, "weight": 6.0}
+            ).addTo(feature_group_4bb91c04adda5a3094f12adae8e02a94);
+        
+    
+        var popup_a9374b952305b91f99a7836849b97e3b = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_fb5ec1816002715f5760957c539421f0 = $(`<div id="html_fb5ec1816002715f5760957c539421f0" style="width: 100.0%; height: 100.0%;"><b>강남대로·강남역 축</b> (강남구)<br>링크ID: 1220003800<br>혼잡도: <b>원활</b><br>속도: 34.0 km/h / 여행시간: 318.0 초</div>`)[0];
+                popup_a9374b952305b91f99a7836849b97e3b.setContent(html_fb5ec1816002715f5760957c539421f0);
+            
+        
+
+        poly_line_f8797c8ea4b60f040b8e097e57055b80.bindPopup(popup_a9374b952305b91f99a7836849b97e3b)
+        ;
+
+        
+    
+    
+            poly_line_f8797c8ea4b60f040b8e097e57055b80.bindTooltip(
+                `<div>
+                     [강남구 · 원활] 강남대로·강남역 축 (34.0 km/h)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var poly_line_ea78b8d68f5fd39fdf03bf0a1564598a = L.polyline(
+                [[37.5005, 127.0365], [37.5085, 127.0635]],
+                {"bubblingMouseEvents": true, "color": "#74c0fc", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "#74c0fc", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 0.86, "smoothFactor": 1.0, "stroke": true, "weight": 9.5}
+            ).addTo(feature_group_4bb91c04adda5a3094f12adae8e02a94);
+        
+    
+        var popup_1a62eb56cf2f5cd0dadc538dc55304c0 = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_b3cd679ce0ae1b9112e988cea76d6a9c = $(`<div id="html_b3cd679ce0ae1b9112e988cea76d6a9c" style="width: 100.0%; height: 100.0%;"><b>테헤란로·선릉·역삼 축</b> (강남구)<br>링크ID: 1220000200<br>혼잡도: <b>서행</b><br>속도: 24.3 km/h / 여행시간: 126.0 초</div>`)[0];
+                popup_1a62eb56cf2f5cd0dadc538dc55304c0.setContent(html_b3cd679ce0ae1b9112e988cea76d6a9c);
+            
+        
+
+        poly_line_ea78b8d68f5fd39fdf03bf0a1564598a.bindPopup(popup_1a62eb56cf2f5cd0dadc538dc55304c0)
+        ;
+
+        
+    
+    
+            poly_line_ea78b8d68f5fd39fdf03bf0a1564598a.bindTooltip(
+                `<div>
+                     [강남구 · 서행] 테헤란로·선릉·역삼 축 (24.3 km/h)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var poly_line_e3344e602107f9769a897f83a10cf88e = L.polyline(
+                [[37.4865, 127.043], [37.516, 127.0345]],
+                {"bubblingMouseEvents": true, "color": "#74c0fc", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "#74c0fc", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 0.86, "smoothFactor": 1.0, "stroke": true, "weight": 9.5}
+            ).addTo(feature_group_4bb91c04adda5a3094f12adae8e02a94);
+        
+    
+        var popup_37e83ee14e54d305ac476d6683d55719 = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_3a7c35c7c22fdaf4e49a6f33fba53938 = $(`<div id="html_3a7c35c7c22fdaf4e49a6f33fba53938" style="width: 100.0%; height: 100.0%;"><b>언주로·도곡·논현 축</b> (강남구)<br>링크ID: 1220000300<br>혼잡도: <b>서행</b><br>속도: 24.7 km/h / 여행시간: 93.0 초</div>`)[0];
+                popup_37e83ee14e54d305ac476d6683d55719.setContent(html_3a7c35c7c22fdaf4e49a6f33fba53938);
+            
+        
+
+        poly_line_e3344e602107f9769a897f83a10cf88e.bindPopup(popup_37e83ee14e54d305ac476d6683d55719)
+        ;
+
+        
+    
+    
+            poly_line_e3344e602107f9769a897f83a10cf88e.bindTooltip(
+                `<div>
+                     [강남구 · 서행] 언주로·도곡·논현 축 (24.7 km/h)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var poly_line_369715b289e53d54f952456ef7ce94c3 = L.polyline(
+                [[37.4845, 127.038], [37.4895, 127.082]],
+                {"bubblingMouseEvents": true, "color": "#51cf66", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "#51cf66", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 0.72, "smoothFactor": 1.0, "stroke": true, "weight": 6.0}
+            ).addTo(feature_group_4bb91c04adda5a3094f12adae8e02a94);
+        
+    
+        var popup_c82775ba364795e319400d66189e16a2 = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_6581452b3f25bfc285f303dacf122b7a = $(`<div id="html_6581452b3f25bfc285f303dacf122b7a" style="width: 100.0%; height: 100.0%;"><b>남부순환로·대치·수서 남측 축</b> (강남구)<br>링크ID: 1220000400<br>혼잡도: <b>원활</b><br>속도: 33.1 km/h / 여행시간: 69.0 초</div>`)[0];
+                popup_c82775ba364795e319400d66189e16a2.setContent(html_6581452b3f25bfc285f303dacf122b7a);
+            
+        
+
+        poly_line_369715b289e53d54f952456ef7ce94c3.bindPopup(popup_c82775ba364795e319400d66189e16a2)
+        ;
+
+        
+    
+    
+            poly_line_369715b289e53d54f952456ef7ce94c3.bindTooltip(
+                `<div>
+                     [강남구 · 원활] 남부순환로·대치·수서 남측 축 (33.1 km/h)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var poly_line_9f031a4e3550f726380551797d24aa5f = L.polyline(
+                [[37.5065, 127.0605], [37.5255, 127.0535]],
+                {"bubblingMouseEvents": true, "color": "#51cf66", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "#51cf66", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 0.72, "smoothFactor": 1.0, "stroke": true, "weight": 6.0}
+            ).addTo(feature_group_4bb91c04adda5a3094f12adae8e02a94);
+        
+    
+        var popup_d1d07d1084df0023976511df6000da10 = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_5a05d417b627299b902575e9f98e9746 = $(`<div id="html_5a05d417b627299b902575e9f98e9746" style="width: 100.0%; height: 100.0%;"><b>영동대로·삼성·청담 동측 축</b> (강남구)<br>링크ID: 1220000500<br>혼잡도: <b>원활</b><br>속도: 31.0 km/h / 여행시간: 71.0 초</div>`)[0];
+                popup_d1d07d1084df0023976511df6000da10.setContent(html_5a05d417b627299b902575e9f98e9746);
+            
+        
+
+        poly_line_9f031a4e3550f726380551797d24aa5f.bindPopup(popup_d1d07d1084df0023976511df6000da10)
+        ;
+
+        
+    
+    
+            poly_line_9f031a4e3550f726380551797d24aa5f.bindTooltip(
+                `<div>
+                     [강남구 · 원활] 영동대로·삼성·청담 동측 축 (31.0 km/h)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var poly_line_9c14989e8d584fe5bed06e8652d56c84 = L.polyline(
+                [[37.5165, 127.022], [37.5245, 127.048]],
+                {"bubblingMouseEvents": true, "color": "#51cf66", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "#51cf66", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 0.72, "smoothFactor": 1.0, "stroke": true, "weight": 6.0}
+            ).addTo(feature_group_4bb91c04adda5a3094f12adae8e02a94);
+        
+    
+        var popup_4bbb236238619aefc4645eb51ef927bd = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_0c4d428fc7b52d0c9feefd0f7482661d = $(`<div id="html_0c4d428fc7b52d0c9feefd0f7482661d" style="width: 100.0%; height: 100.0%;"><b>도산대로·신사·압구정 북측 축</b> (강남구)<br>링크ID: 1220000600<br>혼잡도: <b>원활</b><br>속도: 28.3 km/h / 여행시간: 78.0 초</div>`)[0];
+                popup_4bbb236238619aefc4645eb51ef927bd.setContent(html_0c4d428fc7b52d0c9feefd0f7482661d);
+            
+        
+
+        poly_line_9c14989e8d584fe5bed06e8652d56c84.bindPopup(popup_4bbb236238619aefc4645eb51ef927bd)
+        ;
+
+        
+    
+    
+            poly_line_9c14989e8d584fe5bed06e8652d56c84.bindTooltip(
+                `<div>
+                     [강남구 · 원활] 도산대로·신사·압구정 북측 축 (28.3 km/h)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            feature_group_4bb91c04adda5a3094f12adae8e02a94.addTo(map_1a53db21442c5c5a6ef9ee89b6021eb6);
+        
+    
+            var feature_group_0f90f649cfb4c3f9311f5ead4106292b = L.featureGroup(
+                {
+}
+            );
+        
+    
+            var circle_marker_4ff17dd7ee0a1a4c5f19dbbd80831443 = L.circleMarker(
+                [37.48561217992573, 127.0395873429168],
+                {"bubblingMouseEvents": true, "color": "#212529", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#ffd43b", "fillOpacity": 0.95, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 8, "stroke": true, "weight": 1.8}
+            ).addTo(feature_group_0f90f649cfb4c3f9311f5ead4106292b);
+        
+    
+        var popup_e26f108690116f2199c2906b818508e7 = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_3e4f95f77ec25d6f9b518a1491cc2006 = $(`<div id="html_3e4f95f77ec25d6f9b518a1491cc2006" style="width: 100.0%; height: 100.0%;"><b>강남베드로병원</b><br>서울특별시 강남구 남부순환로 2649, 베드로병원 (도곡동)<br>구분: 응급실운영신고기관</div>`)[0];
+                popup_e26f108690116f2199c2906b818508e7.setContent(html_3e4f95f77ec25d6f9b518a1491cc2006);
+            
+        
+
+        circle_marker_4ff17dd7ee0a1a4c5f19dbbd80831443.bindPopup(popup_e26f108690116f2199c2906b818508e7)
+        ;
+
+        
+    
+    
+            circle_marker_4ff17dd7ee0a1a4c5f19dbbd80831443.bindTooltip(
+                `<div>
+                     [응급실] 강남베드로병원 (강남구)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_962a530b5355260cef769d8f7c2ec8b6 = L.circleMarker(
+                [37.5009902618151, 127.050967336445],
+                {"bubblingMouseEvents": true, "color": "#212529", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#ffd43b", "fillOpacity": 0.95, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 8, "stroke": true, "weight": 1.8}
+            ).addTo(feature_group_0f90f649cfb4c3f9311f5ead4106292b);
+        
+    
+        var popup_ae429729e44b10bcd7748c2736897803 = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_49de765a494e3812d76779642030db0d = $(`<div id="html_49de765a494e3812d76779642030db0d" style="width: 100.0%; height: 100.0%;"><b>더드림병원</b><br>서울특별시 강남구 선릉로 404, 더드림병원 (대치동)<br>구분: 응급실운영신고기관</div>`)[0];
+                popup_ae429729e44b10bcd7748c2736897803.setContent(html_49de765a494e3812d76779642030db0d);
+            
+        
+
+        circle_marker_962a530b5355260cef769d8f7c2ec8b6.bindPopup(popup_ae429729e44b10bcd7748c2736897803)
+        ;
+
+        
+    
+    
+            circle_marker_962a530b5355260cef769d8f7c2ec8b6.bindTooltip(
+                `<div>
+                     [응급실] 더드림병원 (강남구)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_fa86081ebc327232f564ae8a447e0cde = L.circleMarker(
+                [37.48851613490445, 127.08668245340024],
+                {"bubblingMouseEvents": true, "color": "#212529", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#ffd43b", "fillOpacity": 0.95, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 8, "stroke": true, "weight": 1.8}
+            ).addTo(feature_group_0f90f649cfb4c3f9311f5ead4106292b);
+        
+    
+        var popup_2152dd5994d6adc83714ee50f1c38a38 = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_f3b7bb7b956d1c372e2bf6fff2ca0a40 = $(`<div id="html_f3b7bb7b956d1c372e2bf6fff2ca0a40" style="width: 100.0%; height: 100.0%;"><b>삼성서울병원</b><br>서울특별시 강남구 일원로 81 (일원동, 삼성의료원)<br>구분: 지역응급의료센터</div>`)[0];
+                popup_2152dd5994d6adc83714ee50f1c38a38.setContent(html_f3b7bb7b956d1c372e2bf6fff2ca0a40);
+            
+        
+
+        circle_marker_fa86081ebc327232f564ae8a447e0cde.bindPopup(popup_2152dd5994d6adc83714ee50f1c38a38)
+        ;
+
+        
+    
+    
+            circle_marker_fa86081ebc327232f564ae8a447e0cde.bindTooltip(
+                `<div>
+                     [응급실] 삼성서울병원 (강남구)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_03de830fe990104f7514ec061dba69db = L.circleMarker(
+                [37.49280698464548, 127.04631254186796],
+                {"bubblingMouseEvents": true, "color": "#212529", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#ffd43b", "fillOpacity": 0.95, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 8, "stroke": true, "weight": 1.8}
+            ).addTo(feature_group_0f90f649cfb4c3f9311f5ead4106292b);
+        
+    
+        var popup_e09565eac6365436262236421dec8f1f = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_6f631edd2a8903a39e58a3b26d447f62 = $(`<div id="html_6f631edd2a8903a39e58a3b26d447f62" style="width: 100.0%; height: 100.0%;"><b>연세대학교의과대학강남세브란스병원</b><br>서울특별시 강남구 언주로 211, 강남세브란스병원 (도곡동)<br>구분: 지역응급의료센터</div>`)[0];
+                popup_e09565eac6365436262236421dec8f1f.setContent(html_6f631edd2a8903a39e58a3b26d447f62);
+            
+        
+
+        circle_marker_03de830fe990104f7514ec061dba69db.bindPopup(popup_e09565eac6365436262236421dec8f1f)
+        ;
+
+        
+    
+    
+            circle_marker_03de830fe990104f7514ec061dba69db.bindTooltip(
+                `<div>
+                     [응급실] 연세대학교의과대학강남세브란스병원 (강남구)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_3d3ec07dcc8d3b28641202df1bdc4dbc = L.circleMarker(
+                [37.49807126965969, 127.05726710883552],
+                {"bubblingMouseEvents": true, "color": "#212529", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#ffd43b", "fillOpacity": 0.95, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 8, "stroke": true, "weight": 1.8}
+            ).addTo(feature_group_0f90f649cfb4c3f9311f5ead4106292b);
+        
+    
+        var popup_d27a6d3156b2e595828a954a5b1be31b = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_53242a3bc30c706e97b062e9330206b9 = $(`<div id="html_53242a3bc30c706e97b062e9330206b9" style="width: 100.0%; height: 100.0%;"><b>재단법인베스티안재단베스티안서울병원</b><br>서울특별시 강남구 도곡로 429 (대치동, 베스티안병원 2층일부 제외)<br>구분: 응급실운영신고기관</div>`)[0];
+                popup_d27a6d3156b2e595828a954a5b1be31b.setContent(html_53242a3bc30c706e97b062e9330206b9);
+            
+        
+
+        circle_marker_3d3ec07dcc8d3b28641202df1bdc4dbc.bindPopup(popup_d27a6d3156b2e595828a954a5b1be31b)
+        ;
+
+        
+    
+    
+            circle_marker_3d3ec07dcc8d3b28641202df1bdc4dbc.bindTooltip(
+                `<div>
+                     [응급실] 재단법인베스티안재단베스티안서울병원 (강남구)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_8d41569131bdb8df0d45bad44777087a = L.circleMarker(
+                [37.50680002585087, 127.03466865188072],
+                {"bubblingMouseEvents": true, "color": "#212529", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#ffd43b", "fillOpacity": 0.95, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 8, "stroke": true, "weight": 1.8}
+            ).addTo(feature_group_0f90f649cfb4c3f9311f5ead4106292b);
+        
+    
+        var popup_2a63defb4751cc33c7b12fc6ad62c232 = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_15a0b6064c7d6907900d74222970d973 = $(`<div id="html_15a0b6064c7d6907900d74222970d973" style="width: 100.0%; height: 100.0%;"><b>차의과학대학교강남차병원</b><br>서울특별시 강남구 논현로 566, 강남차병원(역삼동650-9, 606-4, 605외2필지(지하7층~지하1층, 지상2층~7층)) (역삼동)<br>구분: 응급실운영신고기관</div>`)[0];
+                popup_2a63defb4751cc33c7b12fc6ad62c232.setContent(html_15a0b6064c7d6907900d74222970d973);
+            
+        
+
+        circle_marker_8d41569131bdb8df0d45bad44777087a.bindPopup(popup_2a63defb4751cc33c7b12fc6ad62c232)
+        ;
+
+        
+    
+    
+            circle_marker_8d41569131bdb8df0d45bad44777087a.bindTooltip(
+                `<div>
+                     [응급실] 차의과학대학교강남차병원 (강남구)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_7f5a46eca4dbf2021063d86d9b8ba675 = L.circleMarker(
+                [37.5525892651719, 126.933734666413],
+                {"bubblingMouseEvents": true, "color": "#212529", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#ffd43b", "fillOpacity": 0.95, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 8, "stroke": true, "weight": 1.8}
+            ).addTo(feature_group_0f90f649cfb4c3f9311f5ead4106292b);
+        
+    
+        var popup_4536a58655c2bf9d3fdaaf5612c7c2ef = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_1615f804032e6a81df0d8e67dd26c1c7 = $(`<div id="html_1615f804032e6a81df0d8e67dd26c1c7" style="width: 100.0%; height: 100.0%;"><b>신촌연세병원</b><br>서울특별시 마포구 서강로 110, 지2층~6층 (신수동)<br>구분: 응급실운영신고기관</div>`)[0];
+                popup_4536a58655c2bf9d3fdaaf5612c7c2ef.setContent(html_1615f804032e6a81df0d8e67dd26c1c7);
+            
+        
+
+        circle_marker_7f5a46eca4dbf2021063d86d9b8ba675.bindPopup(popup_4536a58655c2bf9d3fdaaf5612c7c2ef)
+        ;
+
+        
+    
+    
+            circle_marker_7f5a46eca4dbf2021063d86d9b8ba675.bindTooltip(
+                `<div>
+                     [응급실] 신촌연세병원 (마포구)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_9e13c717848bdb073995ce26bbf494ba = L.circleMarker(
+                [37.51827233800711, 126.93673129599132],
+                {"bubblingMouseEvents": true, "color": "#212529", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#ffd43b", "fillOpacity": 0.95, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 8, "stroke": true, "weight": 1.8}
+            ).addTo(feature_group_0f90f649cfb4c3f9311f5ead4106292b);
+        
+    
+        var popup_aaf7e009a03899c215d60f2ddec6298e = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_0c71b1eee50b3d472554df4772b3c50e = $(`<div id="html_0c71b1eee50b3d472554df4772b3c50e" style="width: 100.0%; height: 100.0%;"><b>가톨릭대학교 여의도성모병원</b><br>서울특별시 영등포구 63로 10, 여의도성모병원 (여의도동)<br>구분: 지역응급의료기관</div>`)[0];
+                popup_aaf7e009a03899c215d60f2ddec6298e.setContent(html_0c71b1eee50b3d472554df4772b3c50e);
+            
+        
+
+        circle_marker_9e13c717848bdb073995ce26bbf494ba.bindPopup(popup_aaf7e009a03899c215d60f2ddec6298e)
+        ;
+
+        
+    
+    
+            circle_marker_9e13c717848bdb073995ce26bbf494ba.bindTooltip(
+                `<div>
+                     [응급실] 가톨릭대학교 여의도성모병원 (영등포구)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_c9d7779763c84e0007aef55a3d44d849 = L.circleMarker(
+                [37.49068925436284, 126.90716948025135],
+                {"bubblingMouseEvents": true, "color": "#212529", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#ffd43b", "fillOpacity": 0.95, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 8, "stroke": true, "weight": 1.8}
+            ).addTo(feature_group_0f90f649cfb4c3f9311f5ead4106292b);
+        
+    
+        var popup_0b8c902808cd21e394cc8260e7ca93cf = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_38addbb4e660345d3259156d2ee5ae80 = $(`<div id="html_38addbb4e660345d3259156d2ee5ae80" style="width: 100.0%; height: 100.0%;"><b>대림성모병원</b><br>서울특별시 영등포구 시흥대로 657 (대림동, 대림성모병원)<br>구분: 지역응급의료기관</div>`)[0];
+                popup_0b8c902808cd21e394cc8260e7ca93cf.setContent(html_38addbb4e660345d3259156d2ee5ae80);
+            
+        
+
+        circle_marker_c9d7779763c84e0007aef55a3d44d849.bindPopup(popup_0b8c902808cd21e394cc8260e7ca93cf)
+        ;
+
+        
+    
+    
+            circle_marker_c9d7779763c84e0007aef55a3d44d849.bindTooltip(
+                `<div>
+                     [응급실] 대림성모병원 (영등포구)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_0ec4db61e6ba748c940fdc22b0fb4fc5 = L.circleMarker(
+                [37.4938507104387, 126.89925446922592],
+                {"bubblingMouseEvents": true, "color": "#212529", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#ffd43b", "fillOpacity": 0.95, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 8, "stroke": true, "weight": 1.8}
+            ).addTo(feature_group_0f90f649cfb4c3f9311f5ead4106292b);
+        
+    
+        var popup_bfc1083fb2ae4a5ba48be55a7a6c0474 = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_68e35ade5a62e7e9e896c6bb16577a57 = $(`<div id="html_68e35ade5a62e7e9e896c6bb16577a57" style="width: 100.0%; height: 100.0%;"><b>명지성모병원</b><br>서울특별시 영등포구 도림로 156, 명지성모병원 (대림동)<br>구분: 지역응급의료기관</div>`)[0];
+                popup_bfc1083fb2ae4a5ba48be55a7a6c0474.setContent(html_68e35ade5a62e7e9e896c6bb16577a57);
+            
+        
+
+        circle_marker_0ec4db61e6ba748c940fdc22b0fb4fc5.bindPopup(popup_bfc1083fb2ae4a5ba48be55a7a6c0474)
+        ;
+
+        
+    
+    
+            circle_marker_0ec4db61e6ba748c940fdc22b0fb4fc5.bindTooltip(
+                `<div>
+                     [응급실] 명지성모병원 (영등포구)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_2b090c69830c3f41ddb4624cd23caf1f = L.circleMarker(
+                [37.51205044957338, 126.92236733617032],
+                {"bubblingMouseEvents": true, "color": "#212529", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#ffd43b", "fillOpacity": 0.95, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 8, "stroke": true, "weight": 1.8}
+            ).addTo(feature_group_0f90f649cfb4c3f9311f5ead4106292b);
+        
+    
+        var popup_150d508361511aa981c69c054f08bf6c = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_33d63ee6a111f47f232d0754f26fba8f = $(`<div id="html_33d63ee6a111f47f232d0754f26fba8f" style="width: 100.0%; height: 100.0%;"><b>성애의료재단성애병원</b><br>서울특별시 영등포구 여의대방로53길 22 (신길동, 성애병원)<br>구분: 지역응급의료기관</div>`)[0];
+                popup_150d508361511aa981c69c054f08bf6c.setContent(html_33d63ee6a111f47f232d0754f26fba8f);
+            
+        
+
+        circle_marker_2b090c69830c3f41ddb4624cd23caf1f.bindPopup(popup_150d508361511aa981c69c054f08bf6c)
+        ;
+
+        
+    
+    
+            circle_marker_2b090c69830c3f41ddb4624cd23caf1f.bindTooltip(
+                `<div>
+                     [응급실] 성애의료재단성애병원 (영등포구)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_1a43c8c28640fe57381814b6dd4181dd = L.circleMarker(
+                [37.51884832876216, 126.90367981067836],
+                {"bubblingMouseEvents": true, "color": "#212529", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#ffd43b", "fillOpacity": 0.95, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 8, "stroke": true, "weight": 1.8}
+            ).addTo(feature_group_0f90f649cfb4c3f9311f5ead4106292b);
+        
+    
+        var popup_8d8208b427320f22f8fe7fe789ff7bee = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_df842111cb6d13c1b435f45628b403f8 = $(`<div id="html_df842111cb6d13c1b435f45628b403f8" style="width: 100.0%; height: 100.0%;"><b>씨엠병원</b><br>서울특별시 영등포구 영등포로36길 13 (영등포동4가, 충무병원)<br>구분: 지역응급의료기관</div>`)[0];
+                popup_8d8208b427320f22f8fe7fe789ff7bee.setContent(html_df842111cb6d13c1b435f45628b403f8);
+            
+        
+
+        circle_marker_1a43c8c28640fe57381814b6dd4181dd.bindPopup(popup_8d8208b427320f22f8fe7fe789ff7bee)
+        ;
+
+        
+    
+    
+            circle_marker_1a43c8c28640fe57381814b6dd4181dd.bindTooltip(
+                `<div>
+                     [응급실] 씨엠병원 (영등포구)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_59684b9eab4bef433c043c98e36fcd4d = L.circleMarker(
+                [37.526858089517, 126.89561402986],
+                {"bubblingMouseEvents": true, "color": "#212529", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#ffd43b", "fillOpacity": 0.95, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 8, "stroke": true, "weight": 1.8}
+            ).addTo(feature_group_0f90f649cfb4c3f9311f5ead4106292b);
+        
+    
+        var popup_d3aaa214e81ea0b0cd5559b8d0869d50 = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_e1ac61aca4be360147cee21d8828526a = $(`<div id="html_e1ac61aca4be360147cee21d8828526a" style="width: 100.0%; height: 100.0%;"><b>의료법인인봉의료재단영등포병원</b><br>서울특별시 영등포구 당산로31길 10 (당산동3가)<br>구분: 응급실운영신고기관</div>`)[0];
+                popup_d3aaa214e81ea0b0cd5559b8d0869d50.setContent(html_e1ac61aca4be360147cee21d8828526a);
+            
+        
+
+        circle_marker_59684b9eab4bef433c043c98e36fcd4d.bindPopup(popup_d3aaa214e81ea0b0cd5559b8d0869d50)
+        ;
+
+        
+    
+    
+            circle_marker_59684b9eab4bef433c043c98e36fcd4d.bindTooltip(
+                `<div>
+                     [응급실] 의료법인인봉의료재단영등포병원 (영등포구)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_df70749662675dae2e6eb8c5b4a63758 = L.circleMarker(
+                [37.5224047841717, 126.890913736375],
+                {"bubblingMouseEvents": true, "color": "#212529", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#ffd43b", "fillOpacity": 0.95, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 8, "stroke": true, "weight": 1.8}
+            ).addTo(feature_group_0f90f649cfb4c3f9311f5ead4106292b);
+        
+    
+        var popup_49def57b67abe4e97ce8f88bda7a29ac = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_21b3abd50f7bf8851a7baa2b57c13d68 = $(`<div id="html_21b3abd50f7bf8851a7baa2b57c13d68" style="width: 100.0%; height: 100.0%;"><b>한강수병원</b><br>서울특별시 영등포구 영등포로 83, 한강수병원 (양평동1가)<br>구분: 응급실운영신고기관</div>`)[0];
+                popup_49def57b67abe4e97ce8f88bda7a29ac.setContent(html_21b3abd50f7bf8851a7baa2b57c13d68);
+            
+        
+
+        circle_marker_df70749662675dae2e6eb8c5b4a63758.bindPopup(popup_49def57b67abe4e97ce8f88bda7a29ac)
+        ;
+
+        
+    
+    
+            circle_marker_df70749662675dae2e6eb8c5b4a63758.bindTooltip(
+                `<div>
+                     [응급실] 한강수병원 (영등포구)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_1b13f44301a0c1d3a393a53136eb7404 = L.circleMarker(
+                [37.4932492859, 126.9086725295],
+                {"bubblingMouseEvents": true, "color": "#212529", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#ffd43b", "fillOpacity": 0.95, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 8, "stroke": true, "weight": 1.8}
+            ).addTo(feature_group_0f90f649cfb4c3f9311f5ead4106292b);
+        
+    
+        var popup_1458971e2a1f83b4ede17a2ce7d7a99a = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_c9fac1e3e0fa7861e622800e70fa1f27 = $(`<div id="html_c9fac1e3e0fa7861e622800e70fa1f27" style="width: 100.0%; height: 100.0%;"><b>한림대학교 강남성심병원</b><br>서울특별시 영등포구 신길로 1 (대림동, 강남성심병원)<br>구분: 지역응급의료센터</div>`)[0];
+                popup_1458971e2a1f83b4ede17a2ce7d7a99a.setContent(html_c9fac1e3e0fa7861e622800e70fa1f27);
+            
+        
+
+        circle_marker_1b13f44301a0c1d3a393a53136eb7404.bindPopup(popup_1458971e2a1f83b4ede17a2ce7d7a99a)
+        ;
+
+        
+    
+    
+            circle_marker_1b13f44301a0c1d3a393a53136eb7404.bindTooltip(
+                `<div>
+                     [응급실] 한림대학교 강남성심병원 (영등포구)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_e9b8e566ef98663d8b82b32f4abe9787 = L.circleMarker(
+                [37.52346674579277, 126.91033000120588],
+                {"bubblingMouseEvents": true, "color": "#212529", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#ffd43b", "fillOpacity": 0.95, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 8, "stroke": true, "weight": 1.8}
+            ).addTo(feature_group_0f90f649cfb4c3f9311f5ead4106292b);
+        
+    
+        var popup_5a4c56c6f4b7303a9cad2a9c169f113a = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_5b29174d861ad4cbfeca7086501447e5 = $(`<div id="html_5b29174d861ad4cbfeca7086501447e5" style="width: 100.0%; height: 100.0%;"><b>한림대학교한강성심병원</b><br>서울특별시 영등포구 버드나루로7길 12 (영등포동7가, 한강성심병원)<br>구분: 응급실운영신고기관</div>`)[0];
+                popup_5a4c56c6f4b7303a9cad2a9c169f113a.setContent(html_5b29174d861ad4cbfeca7086501447e5);
+            
+        
+
+        circle_marker_e9b8e566ef98663d8b82b32f4abe9787.bindPopup(popup_5a4c56c6f4b7303a9cad2a9c169f113a)
+        ;
+
+        
+    
+    
+            circle_marker_e9b8e566ef98663d8b82b32f4abe9787.bindTooltip(
+                `<div>
+                     [응급실] 한림대학교한강성심병원 (영등포구)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_d13c0be95468df71b6b81d0416e34029 = L.circleMarker(
+                [37.56849763123383, 126.96793805451702],
+                {"bubblingMouseEvents": true, "color": "#212529", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#ffd43b", "fillOpacity": 0.95, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 8, "stroke": true, "weight": 1.8}
+            ).addTo(feature_group_0f90f649cfb4c3f9311f5ead4106292b);
+        
+    
+        var popup_4af53c4e7a12ce46de8b377bbe54ed78 = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_7ffd519be67a987ec1126ee893ef6bb1 = $(`<div id="html_7ffd519be67a987ec1126ee893ef6bb1" style="width: 100.0%; height: 100.0%;"><b>강북삼성병원</b><br>서울특별시 종로구 새문안로 29 (평동)<br>구분: 지역응급의료센터</div>`)[0];
+                popup_4af53c4e7a12ce46de8b377bbe54ed78.setContent(html_7ffd519be67a987ec1126ee893ef6bb1);
+            
+        
+
+        circle_marker_d13c0be95468df71b6b81d0416e34029.bindPopup(popup_4af53c4e7a12ce46de8b377bbe54ed78)
+        ;
+
+        
+    
+    
+            circle_marker_d13c0be95468df71b6b81d0416e34029.bindTooltip(
+                `<div>
+                     [응급실] 강북삼성병원 (종로구)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_4dbef38012509f5c793501f133b518a7 = L.circleMarker(
+                [37.57966608924356, 126.99896308412193],
+                {"bubblingMouseEvents": true, "color": "#212529", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#ffd43b", "fillOpacity": 0.95, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 8, "stroke": true, "weight": 1.8}
+            ).addTo(feature_group_0f90f649cfb4c3f9311f5ead4106292b);
+        
+    
+        var popup_4197bac8e7871242ed514846def80ad0 = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_352b69622f44003f7e8077bf7657ceda = $(`<div id="html_352b69622f44003f7e8077bf7657ceda" style="width: 100.0%; height: 100.0%;"><b>서울대학교병원</b><br>서울특별시 종로구 대학로 101 (연건동)<br>구분: 권역응급의료센터</div>`)[0];
+                popup_4197bac8e7871242ed514846def80ad0.setContent(html_352b69622f44003f7e8077bf7657ceda);
+            
+        
+
+        circle_marker_4dbef38012509f5c793501f133b518a7.bindPopup(popup_4197bac8e7871242ed514846def80ad0)
+        ;
+
+        
+    
+    
+            circle_marker_4dbef38012509f5c793501f133b518a7.bindTooltip(
+                `<div>
+                     [응급실] 서울대학교병원 (종로구)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_8b6a78b9caf1590ae5d56d13202726eb = L.circleMarker(
+                [37.5804523853297, 126.997196437908],
+                {"bubblingMouseEvents": true, "color": "#212529", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#ffd43b", "fillOpacity": 0.95, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 8, "stroke": true, "weight": 1.8}
+            ).addTo(feature_group_0f90f649cfb4c3f9311f5ead4106292b);
+        
+    
+        var popup_02fa76837bfb04a0023369f1f5568a93 = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_0c899a4eea29ad4aa88c229135d99ed9 = $(`<div id="html_0c899a4eea29ad4aa88c229135d99ed9" style="width: 100.0%; height: 100.0%;"><b>서울대학교치과병원</b><br>서울특별시 종로구 대학로 101 (연건동)<br>구분: 응급실운영신고기관</div>`)[0];
+                popup_02fa76837bfb04a0023369f1f5568a93.setContent(html_0c899a4eea29ad4aa88c229135d99ed9);
+            
+        
+
+        circle_marker_8b6a78b9caf1590ae5d56d13202726eb.bindPopup(popup_02fa76837bfb04a0023369f1f5568a93)
+        ;
+
+        
+    
+    
+            circle_marker_8b6a78b9caf1590ae5d56d13202726eb.bindTooltip(
+                `<div>
+                     [응급실] 서울대학교치과병원 (종로구)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_2b2a065bff7b3898c378a81fd4f098d7 = L.circleMarker(
+                [37.56715536263689, 126.96699861289684],
+                {"bubblingMouseEvents": true, "color": "#212529", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#ffd43b", "fillOpacity": 0.95, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 8, "stroke": true, "weight": 1.8}
+            ).addTo(feature_group_0f90f649cfb4c3f9311f5ead4106292b);
+        
+    
+        var popup_0add02da627dd7b4a833d19a3ee0f4e9 = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_418dc5485bac71f29f984aeb4f08a5d1 = $(`<div id="html_418dc5485bac71f29f984aeb4f08a5d1" style="width: 100.0%; height: 100.0%;"><b>서울적십자병원</b><br>서울특별시 종로구 새문안로 9, 적십자병원 (평동)<br>구분: 지역응급의료기관</div>`)[0];
+                popup_0add02da627dd7b4a833d19a3ee0f4e9.setContent(html_418dc5485bac71f29f984aeb4f08a5d1);
+            
+        
+
+        circle_marker_2b2a065bff7b3898c378a81fd4f098d7.bindPopup(popup_0add02da627dd7b4a833d19a3ee0f4e9)
+        ;
+
+        
+    
+    
+            circle_marker_2b2a065bff7b3898c378a81fd4f098d7.bindTooltip(
+                `<div>
+                     [응급실] 서울적십자병원 (종로구)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_10851611a402d09591c30c7f7f0a50a0 = L.circleMarker(
+                [37.57534016994642, 126.9577071892358],
+                {"bubblingMouseEvents": true, "color": "#212529", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#ffd43b", "fillOpacity": 0.95, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 8, "stroke": true, "weight": 1.8}
+            ).addTo(feature_group_0f90f649cfb4c3f9311f5ead4106292b);
+        
+    
+        var popup_ea4ee08ce13a69102968eefa45352609 = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_22dacc81861cdb58a88f0c6d3c20dfbf = $(`<div id="html_22dacc81861cdb58a88f0c6d3c20dfbf" style="width: 100.0%; height: 100.0%;"><b>세란병원</b><br>서울특별시 종로구 통일로 256 (무악동)<br>구분: 지역응급의료기관</div>`)[0];
+                popup_ea4ee08ce13a69102968eefa45352609.setContent(html_22dacc81861cdb58a88f0c6d3c20dfbf);
+            
+        
+
+        circle_marker_10851611a402d09591c30c7f7f0a50a0.bindPopup(popup_ea4ee08ce13a69102968eefa45352609)
+        ;
+
+        
+    
+    
+            circle_marker_10851611a402d09591c30c7f7f0a50a0.bindTooltip(
+                `<div>
+                     [응급실] 세란병원 (종로구)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            feature_group_0f90f649cfb4c3f9311f5ead4106292b.addTo(map_1a53db21442c5c5a6ef9ee89b6021eb6);
+        
+    
+            var feature_group_442fc3757a1864c88ad1dc0eeffa1e99 = L.featureGroup(
+                {
+}
+            );
+        
+    
+            var marker_576699aa51bd847456a6ca11ae15615b = L.marker(
+                [37.5682, 126.8972],
+                {
+}
+            ).addTo(feature_group_442fc3757a1864c88ad1dc0eeffa1e99);
+        
+    
+            var icon_c39b23e024440290266808822afcdcc7 = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "darkblue",
+  "iconColor": "white",
+  "icon": "user",
+  "prefix": "glyphicon",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_46b57e0a5b9326ce8a473fa15a1e65ef = L.popup({
+  "maxWidth": 320,
+});
+
+        
+            
+                var html_19240a72dc1bbc16289a28f1a4cfb813 = $(`<div id="html_19240a72dc1bbc16289a28f1a4cfb813" style="width: 100.0%; height: 100.0%;"><b>P01 - 마포 상암월드컵공원 인근</b><br>최단 응급실: 신촌연세병원<br>인접 구간: 양화로·홍대입구 축 (<b>원활</b>)<br>적용 속도: 51.4 km/h<br>추정 도착 소요시간: <b>5.55 분</b></div>`)[0];
+                popup_46b57e0a5b9326ce8a473fa15a1e65ef.setContent(html_19240a72dc1bbc16289a28f1a4cfb813);
+            
+        
+
+        marker_576699aa51bd847456a6ca11ae15615b.bindPopup(popup_46b57e0a5b9326ce8a473fa15a1e65ef)
+        ;
+
+        
+    
+    
+            marker_576699aa51bd847456a6ca11ae15615b.bindTooltip(
+                `<div>
+                     P01 (마포 상암월드컵공원 인근) → 신촌연세병원 | 5.55분 (원활·51.4km/h)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_576699aa51bd847456a6ca11ae15615b.setIcon(icon_c39b23e024440290266808822afcdcc7);
+            
+    
+            var poly_line_115069d02b1bde0f55f97bc8847c44a9 = L.polyline(
+                [[37.5682, 126.8972], [37.5525892651719, 126.933734666413]],
+                {"bubblingMouseEvents": true, "color": "#2b8a3e", "dashArray": "5, 5", "dashOffset": null, "fill": false, "fillColor": "#2b8a3e", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 0.88, "smoothFactor": 1.0, "stroke": true, "weight": 2.8}
+            ).addTo(feature_group_442fc3757a1864c88ad1dc0eeffa1e99);
+        
+    
+            poly_line_115069d02b1bde0f55f97bc8847c44a9.bindTooltip(
+                `<div>
+                     P01 ↔ 신촌연세병원: 약 5.55분 (원활)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var marker_7be87bd5738ddee6f4be978519e303c3 = L.marker(
+                [37.5547, 126.9025],
+                {
+}
+            ).addTo(feature_group_442fc3757a1864c88ad1dc0eeffa1e99);
+        
+    
+            var icon_f1135501073fac6a1295e1cd990b63df = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "darkblue",
+  "iconColor": "white",
+  "icon": "user",
+  "prefix": "glyphicon",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_4acce2e9998e8d1dde0019b5c3867455 = L.popup({
+  "maxWidth": 320,
+});
+
+        
+            
+                var html_f60bf4e783a904c72f85dc4863d93292 = $(`<div id="html_f60bf4e783a904c72f85dc4863d93292" style="width: 100.0%; height: 100.0%;"><b>P02 - 마포 망원한강공원 인근</b><br>최단 응급실: 신촌연세병원<br>인접 구간: 양화로·홍대입구 축 (<b>원활</b>)<br>적용 속도: 51.4 km/h<br>추정 도착 소요시간: <b>4.19 분</b></div>`)[0];
+                popup_4acce2e9998e8d1dde0019b5c3867455.setContent(html_f60bf4e783a904c72f85dc4863d93292);
+            
+        
+
+        marker_7be87bd5738ddee6f4be978519e303c3.bindPopup(popup_4acce2e9998e8d1dde0019b5c3867455)
+        ;
+
+        
+    
+    
+            marker_7be87bd5738ddee6f4be978519e303c3.bindTooltip(
+                `<div>
+                     P02 (마포 망원한강공원 인근) → 신촌연세병원 | 4.19분 (원활·51.4km/h)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_7be87bd5738ddee6f4be978519e303c3.setIcon(icon_f1135501073fac6a1295e1cd990b63df);
+            
+    
+            var poly_line_d9c336bcd511f90662f512212d794067 = L.polyline(
+                [[37.5547, 126.9025], [37.5525892651719, 126.933734666413]],
+                {"bubblingMouseEvents": true, "color": "#2b8a3e", "dashArray": "5, 5", "dashOffset": null, "fill": false, "fillColor": "#2b8a3e", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 0.88, "smoothFactor": 1.0, "stroke": true, "weight": 2.8}
+            ).addTo(feature_group_442fc3757a1864c88ad1dc0eeffa1e99);
+        
+    
+            poly_line_d9c336bcd511f90662f512212d794067.bindTooltip(
+                `<div>
+                     P02 ↔ 신촌연세병원: 약 4.19분 (원활)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var marker_562473ba1638966b431db9ff2037fd06 = L.marker(
+                [37.5563, 126.9237],
+                {
+}
+            ).addTo(feature_group_442fc3757a1864c88ad1dc0eeffa1e99);
+        
+    
+            var icon_3d33186fbb8164ebb4fa5a37e08f6ded = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "darkblue",
+  "iconColor": "white",
+  "icon": "user",
+  "prefix": "glyphicon",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_a7a8f782ac688a25c2b1857558d8cf0c = L.popup({
+  "maxWidth": 320,
+});
+
+        
+            
+                var html_fcd4797029798cd3406dcad481a31fd8 = $(`<div id="html_fcd4797029798cd3406dcad481a31fd8" style="width: 100.0%; height: 100.0%;"><b>P03 - 마포 홍대입구역 인근</b><br>최단 응급실: 신촌연세병원<br>인접 구간: 독막로·망원·합정 축 (<b>원활</b>)<br>적용 속도: 50.0 km/h<br>추정 도착 소요시간: <b>1.52 분</b></div>`)[0];
+                popup_a7a8f782ac688a25c2b1857558d8cf0c.setContent(html_fcd4797029798cd3406dcad481a31fd8);
+            
+        
+
+        marker_562473ba1638966b431db9ff2037fd06.bindPopup(popup_a7a8f782ac688a25c2b1857558d8cf0c)
+        ;
+
+        
+    
+    
+            marker_562473ba1638966b431db9ff2037fd06.bindTooltip(
+                `<div>
+                     P03 (마포 홍대입구역 인근) → 신촌연세병원 | 1.52분 (원활·50.0km/h)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_562473ba1638966b431db9ff2037fd06.setIcon(icon_3d33186fbb8164ebb4fa5a37e08f6ded);
+            
+    
+            var poly_line_2b164499c793e12bd5c7c589cd4e1f26 = L.polyline(
+                [[37.5563, 126.9237], [37.5525892651719, 126.933734666413]],
+                {"bubblingMouseEvents": true, "color": "#2b8a3e", "dashArray": "5, 5", "dashOffset": null, "fill": false, "fillColor": "#2b8a3e", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 0.88, "smoothFactor": 1.0, "stroke": true, "weight": 2.8}
+            ).addTo(feature_group_442fc3757a1864c88ad1dc0eeffa1e99);
+        
+    
+            poly_line_2b164499c793e12bd5c7c589cd4e1f26.bindTooltip(
+                `<div>
+                     P03 ↔ 신촌연세병원: 약 1.52분 (원활)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var marker_f3ba9e2c807b12f2da2843e477e3c64f = L.marker(
+                [37.5796, 126.9735],
+                {
+}
+            ).addTo(feature_group_442fc3757a1864c88ad1dc0eeffa1e99);
+        
+    
+            var icon_bd02fddb6b9d5331c8a7a00d0ba29f0e = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "darkblue",
+  "iconColor": "white",
+  "icon": "user",
+  "prefix": "glyphicon",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_f0c41faad41787a489487a33d3533377 = L.popup({
+  "maxWidth": 320,
+});
+
+        
+            
+                var html_a1ac09bf5e85280f26c65301cbb1c407 = $(`<div id="html_a1ac09bf5e85280f26c65301cbb1c407" style="width: 100.0%; height: 100.0%;"><b>P04 - 종로 경복궁·서촌 인근</b><br>최단 응급실: 강북삼성병원<br>인접 구간: 사직로·경복궁 서측 축 (<b>원활</b>)<br>적용 속도: 25.2 km/h<br>추정 도착 소요시간: <b>4.11 분</b></div>`)[0];
+                popup_f0c41faad41787a489487a33d3533377.setContent(html_a1ac09bf5e85280f26c65301cbb1c407);
+            
+        
+
+        marker_f3ba9e2c807b12f2da2843e477e3c64f.bindPopup(popup_f0c41faad41787a489487a33d3533377)
+        ;
+
+        
+    
+    
+            marker_f3ba9e2c807b12f2da2843e477e3c64f.bindTooltip(
+                `<div>
+                     P04 (종로 경복궁·서촌 인근) → 강북삼성병원 | 4.11분 (원활·25.2km/h)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_f3ba9e2c807b12f2da2843e477e3c64f.setIcon(icon_bd02fddb6b9d5331c8a7a00d0ba29f0e);
+            
+    
+            var poly_line_507cd14ce2a0f06a7edc532d52cb696b = L.polyline(
+                [[37.5796, 126.9735], [37.56849763123383, 126.96793805451702]],
+                {"bubblingMouseEvents": true, "color": "#2b8a3e", "dashArray": "5, 5", "dashOffset": null, "fill": false, "fillColor": "#2b8a3e", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 0.88, "smoothFactor": 1.0, "stroke": true, "weight": 2.8}
+            ).addTo(feature_group_442fc3757a1864c88ad1dc0eeffa1e99);
+        
+    
+            poly_line_507cd14ce2a0f06a7edc532d52cb696b.bindTooltip(
+                `<div>
+                     P04 ↔ 강북삼성병원: 약 4.11분 (원활)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var marker_4d3c73c21b15c03fc0954226dfbc83db = L.marker(
+                [37.5704, 126.9829],
+                {
+}
+            ).addTo(feature_group_442fc3757a1864c88ad1dc0eeffa1e99);
+        
+    
+            var icon_b8032f81f7ad834fb2ec72418eb5f662 = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "darkblue",
+  "iconColor": "white",
+  "icon": "user",
+  "prefix": "glyphicon",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_5c9c2467af9ef145b275b1b8cec96ae8 = L.popup({
+  "maxWidth": 320,
+});
+
+        
+            
+                var html_b53be1c9ce449034cc5ad84f4a0ca4cf = $(`<div id="html_b53be1c9ce449034cc5ad84f4a0ca4cf" style="width: 100.0%; height: 100.0%;"><b>P05 - 종로 광화문·종각 인근</b><br>최단 응급실: 강북삼성병원<br>인접 구간: 종로·광화문 축 (<b>정체</b>)<br>적용 속도: 9.7 km/h<br>추정 도착 소요시간: <b>10.74 분</b></div>`)[0];
+                popup_5c9c2467af9ef145b275b1b8cec96ae8.setContent(html_b53be1c9ce449034cc5ad84f4a0ca4cf);
+            
+        
+
+        marker_4d3c73c21b15c03fc0954226dfbc83db.bindPopup(popup_5c9c2467af9ef145b275b1b8cec96ae8)
+        ;
+
+        
+    
+    
+            marker_4d3c73c21b15c03fc0954226dfbc83db.bindTooltip(
+                `<div>
+                     P05 (종로 광화문·종각 인근) → 강북삼성병원 | 10.74분 (정체·9.7km/h)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_4d3c73c21b15c03fc0954226dfbc83db.setIcon(icon_b8032f81f7ad834fb2ec72418eb5f662);
+            
+    
+            var poly_line_9272c3cdfa6bb1b06994ab8fb0921651 = L.polyline(
+                [[37.5704, 126.9829], [37.56849763123383, 126.96793805451702]],
+                {"bubblingMouseEvents": true, "color": "#c92a2a", "dashArray": "5, 5", "dashOffset": null, "fill": false, "fillColor": "#c92a2a", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 0.88, "smoothFactor": 1.0, "stroke": true, "weight": 2.8}
+            ).addTo(feature_group_442fc3757a1864c88ad1dc0eeffa1e99);
+        
+    
+            poly_line_9272c3cdfa6bb1b06994ab8fb0921651.bindTooltip(
+                `<div>
+                     P05 ↔ 강북삼성병원: 약 10.74분 (정체)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var marker_6793d9724316cd0b52a6af93400415c9 = L.marker(
+                [37.5822, 127.0019],
+                {
+}
+            ).addTo(feature_group_442fc3757a1864c88ad1dc0eeffa1e99);
+        
+    
+            var icon_826237d4a61f1c385f3aaf1622e4479c = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "darkblue",
+  "iconColor": "white",
+  "icon": "user",
+  "prefix": "glyphicon",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_c526723fe93df4db338e037020306d3c = L.popup({
+  "maxWidth": 320,
+});
+
+        
+            
+                var html_fa03a1e0cafe29041c297d540ecf7b70 = $(`<div id="html_fa03a1e0cafe29041c297d540ecf7b70" style="width: 100.0%; height: 100.0%;"><b>P06 - 종로 혜화·창신 인근</b><br>최단 응급실: 서울대학교병원<br>인접 구간: 율곡로·창덕궁 북측 축 (<b>원활</b>)<br>적용 속도: 30.6 km/h<br>추정 도착 소요시간: <b>0.98 분</b></div>`)[0];
+                popup_c526723fe93df4db338e037020306d3c.setContent(html_fa03a1e0cafe29041c297d540ecf7b70);
+            
+        
+
+        marker_6793d9724316cd0b52a6af93400415c9.bindPopup(popup_c526723fe93df4db338e037020306d3c)
+        ;
+
+        
+    
+    
+            marker_6793d9724316cd0b52a6af93400415c9.bindTooltip(
+                `<div>
+                     P06 (종로 혜화·창신 인근) → 서울대학교병원 | 0.98분 (원활·30.6km/h)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_6793d9724316cd0b52a6af93400415c9.setIcon(icon_826237d4a61f1c385f3aaf1622e4479c);
+            
+    
+            var poly_line_2b232a91e3c1ea02c23a0833d87886df = L.polyline(
+                [[37.5822, 127.0019], [37.57966608924356, 126.99896308412193]],
+                {"bubblingMouseEvents": true, "color": "#2b8a3e", "dashArray": "5, 5", "dashOffset": null, "fill": false, "fillColor": "#2b8a3e", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 0.88, "smoothFactor": 1.0, "stroke": true, "weight": 2.8}
+            ).addTo(feature_group_442fc3757a1864c88ad1dc0eeffa1e99);
+        
+    
+            poly_line_2b232a91e3c1ea02c23a0833d87886df.bindTooltip(
+                `<div>
+                     P06 ↔ 서울대학교병원: 약 0.98분 (원활)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var marker_8ba9aedf7509f4fb64ad96e0833f9f1c = L.marker(
+                [37.5263, 126.9185],
+                {
+}
+            ).addTo(feature_group_442fc3757a1864c88ad1dc0eeffa1e99);
+        
+    
+            var icon_d99daa253f907e2fecf2fa759f7f83bf = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "darkblue",
+  "iconColor": "white",
+  "icon": "user",
+  "prefix": "glyphicon",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_5976de8febd7e98e405157fd4c4a830a = L.popup({
+  "maxWidth": 320,
+});
+
+        
+            
+                var html_5f17e3bb151bee1c4fa4c45f29915bc0 = $(`<div id="html_5f17e3bb151bee1c4fa4c45f29915bc0" style="width: 100.0%; height: 100.0%;"><b>P07 - 영등포 여의도공원 인근</b><br>최단 응급실: 한림대학교한강성심병원<br>인접 구간: 영등포로·영등포역 축 (<b>서행</b>)<br>적용 속도: 23.0 km/h<br>추정 도착 소요시간: <b>2.67 분</b></div>`)[0];
+                popup_5976de8febd7e98e405157fd4c4a830a.setContent(html_5f17e3bb151bee1c4fa4c45f29915bc0);
+            
+        
+
+        marker_8ba9aedf7509f4fb64ad96e0833f9f1c.bindPopup(popup_5976de8febd7e98e405157fd4c4a830a)
+        ;
+
+        
+    
+    
+            marker_8ba9aedf7509f4fb64ad96e0833f9f1c.bindTooltip(
+                `<div>
+                     P07 (영등포 여의도공원 인근) → 한림대학교한강성심병원 | 2.67분 (서행·23.0km/h)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_8ba9aedf7509f4fb64ad96e0833f9f1c.setIcon(icon_d99daa253f907e2fecf2fa759f7f83bf);
+            
+    
+            var poly_line_d0bf60166c34fa838780a6f7ac300425 = L.polyline(
+                [[37.5263, 126.9185], [37.52346674579277, 126.91033000120588]],
+                {"bubblingMouseEvents": true, "color": "#1864ab", "dashArray": "5, 5", "dashOffset": null, "fill": false, "fillColor": "#1864ab", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 0.88, "smoothFactor": 1.0, "stroke": true, "weight": 2.8}
+            ).addTo(feature_group_442fc3757a1864c88ad1dc0eeffa1e99);
+        
+    
+            poly_line_d0bf60166c34fa838780a6f7ac300425.bindTooltip(
+                `<div>
+                     P07 ↔ 한림대학교한강성심병원: 약 2.67분 (서행)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var marker_a3989292b7d3c490849ae323f6be3a12 = L.marker(
+                [37.5153, 126.9075],
+                {
+}
+            ).addTo(feature_group_442fc3757a1864c88ad1dc0eeffa1e99);
+        
+    
+            var icon_8a86804ffea3f01ed05ca136985be22b = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "darkblue",
+  "iconColor": "white",
+  "icon": "user",
+  "prefix": "glyphicon",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_6b649dd4e817c2d433e9cc9961ea799e = L.popup({
+  "maxWidth": 320,
+});
+
+        
+            
+                var html_e3cb853effaeaf30d3994f64ce051967 = $(`<div id="html_e3cb853effaeaf30d3994f64ce051967" style="width: 100.0%; height: 100.0%;"><b>P08 - 영등포 영등포역 인근</b><br>최단 응급실: 씨엠병원<br>인접 구간: 영등포로·영등포역 축 (<b>서행</b>)<br>적용 속도: 23.0 km/h<br>추정 도착 소요시간: <b>1.76 분</b></div>`)[0];
+                popup_6b649dd4e817c2d433e9cc9961ea799e.setContent(html_e3cb853effaeaf30d3994f64ce051967);
+            
+        
+
+        marker_a3989292b7d3c490849ae323f6be3a12.bindPopup(popup_6b649dd4e817c2d433e9cc9961ea799e)
+        ;
+
+        
+    
+    
+            marker_a3989292b7d3c490849ae323f6be3a12.bindTooltip(
+                `<div>
+                     P08 (영등포 영등포역 인근) → 씨엠병원 | 1.76분 (서행·23.0km/h)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_a3989292b7d3c490849ae323f6be3a12.setIcon(icon_8a86804ffea3f01ed05ca136985be22b);
+            
+    
+            var poly_line_3403969ca0e7fdbfa0615ccc7bcd78c8 = L.polyline(
+                [[37.5153, 126.9075], [37.51884832876216, 126.90367981067836]],
+                {"bubblingMouseEvents": true, "color": "#1864ab", "dashArray": "5, 5", "dashOffset": null, "fill": false, "fillColor": "#1864ab", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 0.88, "smoothFactor": 1.0, "stroke": true, "weight": 2.8}
+            ).addTo(feature_group_442fc3757a1864c88ad1dc0eeffa1e99);
+        
+    
+            poly_line_3403969ca0e7fdbfa0615ccc7bcd78c8.bindTooltip(
+                `<div>
+                     P08 ↔ 씨엠병원: 약 1.76분 (서행)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var marker_317dd0d89f2a33d98c91b58fb20046d7 = L.marker(
+                [37.5045, 127.0489],
+                {
+}
+            ).addTo(feature_group_442fc3757a1864c88ad1dc0eeffa1e99);
+        
+    
+            var icon_88a9e5e6541df35258669aa952acacb5 = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "darkblue",
+  "iconColor": "white",
+  "icon": "user",
+  "prefix": "glyphicon",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_2d93422c2fc68a9d4711e4b3f5434aba = L.popup({
+  "maxWidth": 320,
+});
+
+        
+            
+                var html_352d111194dc6c586b7ade7521e24d05 = $(`<div id="html_352d111194dc6c586b7ade7521e24d05" style="width: 100.0%; height: 100.0%;"><b>P09 - 강남 선릉·역삼 인근</b><br>최단 응급실: 더드림병원<br>인접 구간: 테헤란로·선릉·역삼 축 (<b>서행</b>)<br>적용 속도: 24.3 km/h<br>추정 도착 소요시간: <b>1.38 분</b></div>`)[0];
+                popup_2d93422c2fc68a9d4711e4b3f5434aba.setContent(html_352d111194dc6c586b7ade7521e24d05);
+            
+        
+
+        marker_317dd0d89f2a33d98c91b58fb20046d7.bindPopup(popup_2d93422c2fc68a9d4711e4b3f5434aba)
+        ;
+
+        
+    
+    
+            marker_317dd0d89f2a33d98c91b58fb20046d7.bindTooltip(
+                `<div>
+                     P09 (강남 선릉·역삼 인근) → 더드림병원 | 1.38분 (서행·24.3km/h)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_317dd0d89f2a33d98c91b58fb20046d7.setIcon(icon_88a9e5e6541df35258669aa952acacb5);
+            
+    
+            var poly_line_ae47824aaf0e87a87dfaf48727e2c7bf = L.polyline(
+                [[37.5045, 127.0489], [37.5009902618151, 127.050967336445]],
+                {"bubblingMouseEvents": true, "color": "#1864ab", "dashArray": "5, 5", "dashOffset": null, "fill": false, "fillColor": "#1864ab", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 0.88, "smoothFactor": 1.0, "stroke": true, "weight": 2.8}
+            ).addTo(feature_group_442fc3757a1864c88ad1dc0eeffa1e99);
+        
+    
+            poly_line_ae47824aaf0e87a87dfaf48727e2c7bf.bindTooltip(
+                `<div>
+                     P09 ↔ 더드림병원: 약 1.38분 (서행)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var marker_ed213c25e78cb258085b13cfafffec5f = L.marker(
+                [37.4935, 127.063],
+                {
+}
+            ).addTo(feature_group_442fc3757a1864c88ad1dc0eeffa1e99);
+        
+    
+            var icon_57ae11bd1eb7a0a0d415ec571eb54478 = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "darkblue",
+  "iconColor": "white",
+  "icon": "user",
+  "prefix": "glyphicon",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_95001ebfbb2d12d6ed3aef9af3e15523 = L.popup({
+  "maxWidth": 320,
+});
+
+        
+            
+                var html_f1b07096fa2170ee291839180bfe0861 = $(`<div id="html_f1b07096fa2170ee291839180bfe0861" style="width: 100.0%; height: 100.0%;"><b>P10 - 강남 대치·도곡 인근</b><br>최단 응급실: 재단법인베스티안재단베스티안서울병원<br>인접 구간: 남부순환로·대치·수서 남측 축 (<b>원활</b>)<br>적용 속도: 33.1 km/h<br>추정 도착 소요시간: <b>1.69 분</b></div>`)[0];
+                popup_95001ebfbb2d12d6ed3aef9af3e15523.setContent(html_f1b07096fa2170ee291839180bfe0861);
+            
+        
+
+        marker_ed213c25e78cb258085b13cfafffec5f.bindPopup(popup_95001ebfbb2d12d6ed3aef9af3e15523)
+        ;
+
+        
+    
+    
+            marker_ed213c25e78cb258085b13cfafffec5f.bindTooltip(
+                `<div>
+                     P10 (강남 대치·도곡 인근) → 재단법인베스티안재단베스티안서울병원 | 1.69분 (원활·33.1km/h)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_ed213c25e78cb258085b13cfafffec5f.setIcon(icon_57ae11bd1eb7a0a0d415ec571eb54478);
+            
+    
+            var poly_line_0287c444ab70fc5bc81d8eab3c592c14 = L.polyline(
+                [[37.4935, 127.063], [37.49807126965969, 127.05726710883552]],
+                {"bubblingMouseEvents": true, "color": "#2b8a3e", "dashArray": "5, 5", "dashOffset": null, "fill": false, "fillColor": "#2b8a3e", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 0.88, "smoothFactor": 1.0, "stroke": true, "weight": 2.8}
+            ).addTo(feature_group_442fc3757a1864c88ad1dc0eeffa1e99);
+        
+    
+            poly_line_0287c444ab70fc5bc81d8eab3c592c14.bindTooltip(
+                `<div>
+                     P10 ↔ 재단법인베스티안재단베스티안서울병원: 약 1.69분 (원활)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            feature_group_442fc3757a1864c88ad1dc0eeffa1e99.addTo(map_1a53db21442c5c5a6ef9ee89b6021eb6);
+        
+    
+            var layer_control_afaf975e0bef989d5ca7eb0cb0c61d03_layers = {
+                base_layers : {
+                    "https://mt1.google.com/vt/lyrs=m\u0026x={x}\u0026y={y}\u0026z={z}\u0026key=aizasyd3byh3t3lvnx9fgo7-ytbgegworh2t3t0" : tile_layer_353abc007d11e1a417464b067315c3a3,
+                    "Google Maps (\uc704\uc131+\ub3c4\ub85c)" : tile_layer_71f3c3de7efc676212d944fb4ff4e745,
+                },
+                overlays :  {
+                    "\uc2e4\uc2dc\uac04 \uad50\ud1b5 \ud63c\uc7a1\ub3c4 (4\uac1c \uad6c)" : feature_group_4bb91c04adda5a3094f12adae8e02a94,
+                    "\uc751\uae09\uc2e4 \uc704\uce58 (4\uac1c \uad6c)" : feature_group_0f90f649cfb4c3f9311f5ead4106292b,
+                    "\uac00\uc0c1 \ud658\uc790 10\uba85 \u0026 \ucd94\uc815 \ub3c4\ucc29\uc2dc\uac04" : feature_group_442fc3757a1864c88ad1dc0eeffa1e99,
+                },
+            };
+            let layer_control_afaf975e0bef989d5ca7eb0cb0c61d03 = L.control.layers(
+                layer_control_afaf975e0bef989d5ca7eb0cb0c61d03_layers.base_layers,
+                layer_control_afaf975e0bef989d5ca7eb0cb0c61d03_layers.overlays,
+                {
+  "position": "topright",
+  "collapsed": true,
+  "autoZIndex": true,
+}
+            ).addTo(map_1a53db21442c5c5a6ef9ee89b6021eb6);
+
+        
+</script>
+</html>
